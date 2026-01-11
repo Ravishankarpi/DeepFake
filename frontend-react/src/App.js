@@ -8,7 +8,7 @@ function App() {
   const [error, setError] = useState(null);
   const [preview, setPreview] = useState(null);
 
-  const appUrl = "https://deepfakebackend-llr2lqt2.b4a.run"; // Backend URL
+  const appUrl = "https://permutable-overcopiously-alishia.ngrok-free.dev"; // Backend URL
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -210,7 +210,7 @@ function App() {
         </div>
 
         <footer className="footer">
-          <p>Powered by Advanced AI & Machine Learning Models</p>
+          <p>Powered by Yodabot Tech Private Limited</p>
         </footer>
       </div>
     </div>
