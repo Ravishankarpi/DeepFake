@@ -8,6 +8,8 @@ function App() {
   const [error, setError] = useState(null);
   const [preview, setPreview] = useState(null);
 
+  const appUrl = "https://deepfakebackend-llr2lqt2.b4a.run"; // Backend URL
+
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
@@ -37,8 +39,8 @@ function App() {
     // Decide endpoint based on file type
     const isVideo = file.type.startsWith("video");
     const endpoint = isVideo
-      ? "https://deepfake-29ub.onrender.com/analyze-video"
-      : "https://deepfake-29ub.onrender.com/analyze-image";
+      ? `${appUrl}/analyze-video`
+      : `${appUrl}/analyze-image`;
 
     try {
       const response = await fetch(endpoint, {
@@ -69,7 +71,7 @@ function App() {
   return (
     <div className="app-container">
       <div className="background-gradient"></div>
-      
+
       <div className="content-wrapper">
         <header className="header">
           <div className="logo-section">
@@ -102,7 +104,11 @@ function App() {
               ) : (
                 <div className="preview-container">
                   {file && file.type.startsWith("image") ? (
-                    <img src={preview} alt="Preview" className="preview-image" />
+                    <img
+                      src={preview}
+                      alt="Preview"
+                      className="preview-image"
+                    />
                   ) : (
                     <video src={preview} className="preview-video" controls />
                   )}
@@ -155,7 +161,9 @@ function App() {
                     <h3 className="verdict-label">Verdict</h3>
                     <p
                       className="verdict-text"
-                      style={{ color: getConfidenceColor(result.deepfake_probability) }}
+                      style={{
+                        color: getConfidenceColor(result.deepfake_probability),
+                      }}
                     >
                       {result.result}
                     </p>
@@ -174,7 +182,9 @@ function App() {
                       className="progress-fill"
                       style={{
                         width: `${result.deepfake_probability * 100}%`,
-                        backgroundColor: getConfidenceColor(result.deepfake_probability),
+                        backgroundColor: getConfidenceColor(
+                          result.deepfake_probability
+                        ),
                       }}
                     ></div>
                   </div>
@@ -183,11 +193,15 @@ function App() {
                 <div className="info-grid">
                   <div className="info-item">
                     <span className="info-label">Confidence Score</span>
-                    <span className="info-value">{result.deepfake_probability}</span>
+                    <span className="info-value">
+                      {result.deepfake_probability}
+                    </span>
                   </div>
                   <div className="info-item">
                     <span className="info-label">Analysis Type</span>
-                    <span className="info-value">{result.type.toUpperCase()}</span>
+                    <span className="info-value">
+                      {result.type.toUpperCase()}
+                    </span>
                   </div>
                 </div>
               </div>
