@@ -18,9 +18,12 @@ function App() {
 
     // Decide endpoint based on file type
     const isVideo = file.type.startsWith("video");
+    // const endpoint = isVideo
+    //   ? "http://localhost:8000/analyze-video"
+    //   : "http://localhost:8000/analyze-image";
     const endpoint = isVideo
-      ? "http://localhost:8000/analyze-video"
-      : "http://localhost:8000/analyze-image";
+      ? "https://deepfake-29ub.onrender.com/analyze-video"
+      : "https://deepfake-29ub.onrender.com/analyze-image";
 
     try {
       const response = await fetch(endpoint, {
@@ -34,7 +37,6 @@ function App() {
 
       const data = await response.json();
       setResult(data);
-
     } catch (err) {
       console.error(err);
       setError("Detection failed. Please try another file.");
@@ -53,13 +55,15 @@ function App() {
         onChange={(e) => setFile(e.target.files[0])}
       />
 
-      <br /><br />
+      <br />
+      <br />
 
       <button onClick={analyzeFile} disabled={loading}>
         {loading ? "Analyzing..." : "Analyze"}
       </button>
 
-      <br /><br />
+      <br />
+      <br />
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
@@ -69,23 +73,26 @@ function App() {
             border: "1px solid #ccc",
             padding: "20px",
             width: "420px",
-            background: "#f9f9f9"
+            background: "#f9f9f9",
           }}
         >
-          <p><b>Type:</b> {result.type}</p>
+          <p>
+            <b>Type:</b> {result.type}
+          </p>
           <p>
             <b>Result:</b>{" "}
             <span
               style={{
-                color:
-                  result.deepfake_probability > 0.5 ? "red" : "green",
+                color: result.deepfake_probability > 0.5 ? "red" : "green",
                 fontWeight: "bold",
               }}
             >
               {result.result}
             </span>
           </p>
-          <p><b>Confidence:</b> {result.deepfake_probability}</p>
+          <p>
+            <b>Confidence:</b> {result.deepfake_probability}
+          </p>
         </div>
       )}
     </div>
