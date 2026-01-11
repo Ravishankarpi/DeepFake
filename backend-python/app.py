@@ -1,4 +1,3 @@
-import os
 from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
@@ -16,22 +15,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-@app.get("/")
-def health():
-    return {"status": "Backend is running"}
-
-@app.post("/detect")
-def detect():
-    return {
-        "deepfake_probability": 0.42,
-        "note": "POC response"
-    }
-
-if __name__ == "__main__":
-    import uvicorn
-    port = int(os.environ.get("PORT", 10000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
 
 # Pretrained XceptionNet (good for face deepfake detection)
 model = timm.create_model("xception", pretrained=True)
